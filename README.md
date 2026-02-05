@@ -20,5 +20,5 @@ To update the example document with the latest changes to the theme, run the fol
 
 ```bash
 typst compile example/main.typ --root .
-typst compile example/main.typ --root . --pages 1 --format svg
+typst compile example/main.typ --root . --pages 1 --format png
 ```
