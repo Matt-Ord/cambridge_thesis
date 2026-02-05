@@ -1,0 +1,24 @@
+{
+    "name": "Debian",
+    "image": "ghcr.io/typst/typst:0.14.2",
+    "features": {},
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "editor.formatOnSave": true,
+                "editor.codeActionsOnSave": {
+                    "source.fixAll": "always"
+                },
+                "tinymist.fontPaths": [
+                    "./fonts"
+                ]
+            },
+            "extensions": [
+                "myriad-dreamin.tinymist"
+            ]
+        }
+    },
+    "containerEnv": {
+        "TYPST_FONT_PATHS": "/workspaces/${localWorkspaceFolderBasename}/fonts"
+    }
+}
