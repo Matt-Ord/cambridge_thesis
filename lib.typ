@@ -70,9 +70,12 @@
       let current_title = if before.len() > 0 { before.last().body } else { "" }
 
       grid(
-        columns: (1fr, 1fr),
+        columns: (5em, 1fr),
         align(left)[#text(weight: "bold", fill: cam-dark-blue, font: "Open Sans", counter(page).display())],
-        align(right)[#text(font: "Feijoa Bold-Cambridge", fill: cam-dark-blue, [#current_title])],
+        align(right)[
+          #set par(justify: false)
+          #text(font: "Feijoa Bold-Cambridge", fill: cam-dark-blue, [#current_title])
+        ],
       )
       v(-8pt)
       line(length: 100%, stroke: 1pt + cam-dark-blue)
