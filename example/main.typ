@@ -1,13 +1,15 @@
-#import "../lib.typ": appendix, cam-dark-blue, cam-slate-4, cam-theisis, declaration, main-body, preamble
+#import "@preview/unofficial-cambridge-thesis:0.0.1": (
+  appendix, cam-dark-blue, cam-slate-4, cam-theisis, declaration, main-body, preamble,
+)
 
 #show: cam-theisis.with(
-  title: "Quantum Brownian Motion",
-  // subtitle: "An Analysis of Cosmic Resonance",
+  title: "University Of Cambridge Thesis Template",
+  subtitle: "A Simple Template For Cambridge Theses",
   author: "Matthew Ord",
-  crest: image("assets/placeholder.svg", width: 100%),
+  crest: image("./assets/placeholder.svg", width: 100%),
   college-crest: none,
   department: "Department of Physics",
-  college: "Fitzwilliam College",
+  college: "Your College",
   degree-title: "Doctor of Philosophy",
 )
 
@@ -50,9 +52,9 @@
 
 = Introduction
 #lorem(100)
-$ E = m C^2 quad hat(H) = planck $
+$ E = m C^2 $
 
-$ E = m C^2 quad hat(H) = planck $
+$ E = m C^2 $
 
 
 #lorem(100) @harry
@@ -72,9 +74,9 @@ $ E = m C^2 quad hat(H) = planck $
 
 
 
-= Introduction 1
+= Sectionz
 #lorem(100)
-$ E = m C^2 quad hat(H) = planck $
+$ E = m C^2 $
 
 
 
