@@ -71,7 +71,9 @@
 
       grid(
         columns: (5em, 1fr),
-        align(left)[#text(weight: "bold", fill: cam-dark-blue, font: "Open Sans", counter(page).display())],
+        align(left)[
+          #text(weight: "bold", fill: cam-dark-blue, font: "Open Sans", counter(page).display())
+        ],
         align(right)[
           #set par(justify: false)
           #text(font: "Feijoa Bold-Cambridge", fill: cam-dark-blue, [#current_title])
