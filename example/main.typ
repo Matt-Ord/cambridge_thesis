@@ -1,38 +1,81 @@
-#import "@preview/unofficial-cambridge-thesis:0.0.1": (
-  abstract, acknowledgements, cam-dark-blue, cam-slate-4, declaration, main-section, table-of-contents, title-page,
-)
+#import "../lib.typ": appendix, cam-dark-blue, cam-slate-4, cam-theisis, declaration, main-body, preamble
 
-#title-page(
-  title: "University Of Cambridge Thesis Template",
-  subtitle: "A Simple Template For Cambridge Theses",
+#show: cam-theisis.with(
+  title: "Quantum Brownian Motion",
+  // subtitle: "An Analysis of Cosmic Resonance",
   author: "Matthew Ord",
-  crest: image("./assets/placeholder.svg", width: 100%),
+  crest: image("assets/placeholder.svg", width: 100%),
   college-crest: none,
   department: "Department of Physics",
-  college: "Your College",
+  college: "Fitzwilliam College",
   degree-title: "Doctor of Philosophy",
 )
 
-#declaration()
-#acknowledgements([
+#preamble([
+
+  #declaration()
+
+  = Acknowledgements
   And I would like to acknowledge ...
-])
-#abstract([
+
+
+
+  = Abstract
   #lorem(100)
+
+  #lorem(100)
+
+  #lorem(100)
+
+  #lorem(100)
+
+  #lorem(100)
+
+  #outline(
+    title: [Table of Contents],
+    indent: auto,
+    depth: 3,
+  )
+
+
 ])
-#table-of-contents()
 
 
 
 
-#show: main-section
 
 
-= Your First Section
+#show: main-body
+
+
+= Introduction
 #lorem(100)
-$ E = m C^2 $
+$ E = m C^2 quad hat(H) = planck $
 
-$ E = m C^2 $
+$ E = m C^2 quad hat(H) = planck $
+
+
+#lorem(100) @harry
+
+== Test
+#lorem(100)
+
+#lorem(100)
+
+=== Test
+#lorem(1000)
+
+== Test
+#lorem(100)
+
+#lorem(100)
+
+
+
+= Introduction 1
+#lorem(100)
+$ E = m C^2 quad hat(H) = planck $
+
 
 
 #lorem(100)
@@ -51,25 +94,25 @@ $ E = m C^2 $
 #lorem(100)
 
 
+#show: appendix
 
-= Your Second Section
-#lorem(100)
+= First Appendix
 
-$ E = m C^2 $
-
-
-
-#lorem(100)
-
-== Test
 #lorem(100)
 
 #lorem(100)
 
-=== Test
-#lorem(1000)
 
-== Test
-#lorem(100)
+== Appendix Subsection
 
 #lorem(100)
+
+=== Appendix Sub-Subsection
+
+#lorem(100)
+
+= Second Appendix
+
+#lorem(100)
+
+#bibliography("bibliography.yml")
