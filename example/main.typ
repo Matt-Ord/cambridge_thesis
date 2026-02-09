@@ -1,5 +1,6 @@
 #import "@preview/unofficial-cambridge-thesis:0.0.1": (
-  appendix, cam-dark-blue, cam-slate-4, cam-theisis, declaration, main-body, preamble,
+  appendix, cam-dark-blue, cam-slate-4, cam-theisis, declaration, main-body,
+  preamble,
 )
 
 #show: cam-theisis.with(

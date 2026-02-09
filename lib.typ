@@ -18,23 +18,35 @@
 
   show heading.where(level: 1): it => {
     pagebreak(weak: true)
+    counter(math.equation).update(0)
     if (it.numbering == none) {
-      align(center, text(font: "Feijoa Bold-Cambridge", size: 2em, fill: cam-dark-blue, it))
+      align(center, text(
+        font: "Feijoa Bold-Cambridge",
+        size: 2em,
+        fill: cam-dark-blue,
+        it,
+      ))
       v(1em)
       return
     }
-
+    let supp-text = it.supplement.text
+    let supp-text = upper(supp-text.at(0)) + supp-text.slice(1)
     v(6em)
     block(spacing: 4em, {
       text(
         font: "Feijoa Medium-Cambridge",
         size: 1.5em,
         fill: cam-slate-4,
-        it.supplement + [ ] + counter(heading).display(it.numbering),
+        supp-text + [ ] + counter(heading).display(it.numbering),
       )
       linebreak()
       linebreak()
-      text(font: "Feijoa Bold-Cambridge", size: 2em, fill: cam-dark-blue, it.body)
+      text(
+        font: "Feijoa Bold-Cambridge",
+        size: 2em,
+        fill: cam-dark-blue,
+        it.body,
+      )
     })
   }
   show heading.where(level: 2): set text(size: 1.5em)
@@ -50,7 +62,7 @@
     let chapter = counter(heading).at(here()).at(0)
     numbering("(1.1)", chapter, n)
   })
-  show math.equation: set text(font: "Fira Math", fill: cam-dark-blue)
+  show math.equation: set text(fill: cam-dark-blue, font: "Fira Math")
 
   set page(
     paper: "a4",
@@ -60,7 +72,9 @@
     header: context {
       // Look for a heading on the current page
       // If a heading exists on this page, return nothing (skip header)
-      let headings = query(heading.where(level: 1)).filter(h => h.location().page() == here().page())
+      let headings = query(heading.where(level: 1)).filter(h => (
+        h.location().page() == here().page()
+      ))
       if headings.len() > 0 {
         return none
       }
@@ -72,11 +86,20 @@
       grid(
         columns: (5em, 1fr),
         align(left)[
-          #text(weight: "bold", fill: cam-dark-blue, font: "Open Sans", counter(page).display())
+          #text(
+            weight: "bold",
+            fill: cam-dark-blue,
+            font: "Open Sans",
+            counter(page).display(),
+          )
         ],
         align(right)[
           #set par(justify: false)
-          #text(font: "Feijoa Bold-Cambridge", fill: cam-dark-blue, [#current_title])
+          #text(
+            font: "Feijoa Bold-Cambridge",
+            fill: cam-dark-blue,
+            [#current_title],
+          )
         ],
       )
       v(-8pt)
@@ -128,10 +151,21 @@
 
   // 2. Title and Subtitle
   block(spacing: 2em, {
-    text(font: "Feijoa Bold-Cambridge", weight: "bold", fill: cam-dark-blue, size: 2.5em, title)
+    text(
+      font: "Feijoa Bold-Cambridge",
+      weight: "bold",
+      fill: cam-dark-blue,
+      size: 2.5em,
+      title,
+    )
     if subtitle != none {
       parbreak()
-      text(font: "Feijoa Medium-Cambridge", weight: "medium", size: 1.5em, subtitle)
+      text(
+        font: "Feijoa Medium-Cambridge",
+        weight: "medium",
+        size: 1.5em,
+        subtitle,
+      )
     }
   })
 
@@ -217,13 +251,13 @@
 
 
 #let main-body(body) = {
-  set heading(numbering: "1.1.1", supplement: "Chapter")
+  set heading(numbering: "1.1.1", supplement: "chapter")
   counter(heading).update(0)
   body
 }
 
 #let appendix(body) = {
-  set heading(numbering: "A.1.1", supplement: "Appendix")
+  set heading(numbering: "A.1.1", supplement: "appendix")
   counter(heading).update(0)
   body
 }
@@ -232,9 +266,20 @@
 #let declaration() = {
   [
     = Declaration
-    This thesis is the result of my own work and includes nothing which is the outcome of work done in collaboration except as declared in the preface and specified in the text. It is not substantially the same as any work that has already been submitted, or is being concurrently submitted, for any degree, diploma or other qualification at the University of Cambridge or any other University or similar institution except as declared in the preface and specified in the text. It does not exceed the prescribed word limit for the relevant Degree Committee.
+    This thesis is the result of my own work and includes nothing which is the
+    outcome of work done in collaboration except as declared in the preface and
+    specified in the text. It is not substantially the same as any work that has
+    already been submitted, or is being concurrently submitted, for any degree,
+    diploma or other qualification at the University of Cambridge or any other
+    University or similar institution except as declared in the preface and
+    specified in the text. It does not exceed the prescribed word limit for the
+    relevant Degree Committee.
     #align(right, [
-      #text(font: "Feijoa Bold-Cambridge", fill: cam-dark-blue, context _author-state.get())
+      #text(
+        font: "Feijoa Bold-Cambridge",
+        fill: cam-dark-blue,
+        context _author-state.get(),
+      )
       \
       #context _date-state.get()
     ])
