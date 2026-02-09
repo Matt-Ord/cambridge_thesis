@@ -19,6 +19,9 @@
   show heading.where(level: 1): it => {
     pagebreak(weak: true)
     counter(math.equation).update(0)
+    counter(figure.where(kind: image)).update(0)
+    counter(figure.where(kind: table)).update(0)
+    counter(figure.where(kind: raw)).update(0)
     if (it.numbering == none) {
       align(center, text(
         font: "Feijoa Bold-Cambridge",
@@ -60,9 +63,15 @@
 
   set math.equation(numbering: n => {
     let chapter = counter(heading).at(here()).at(0)
-    numbering("(1.1)", chapter, n)
+    numbering("1.1", chapter, n)
   })
   show math.equation: set text(fill: cam-dark-blue, font: "Fira Math")
+  set figure(
+    numbering: (..n) => {
+      let chapter = counter(heading).at(here()).at(0)
+      numbering("1.1", chapter, ..n)
+    },
+  )
 
   set page(
     paper: "a4",
