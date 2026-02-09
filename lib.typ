@@ -13,7 +13,11 @@
 #let cam-theisis-text(body) = {
   set text(font: "Open Sans", size: 1em, fill: cam-slate-4)
   set par(justify: true)
-  show heading: set text(font: "Feijoa Bold-Cambridge", fill: cam-dark-blue)
+  show heading: set text(
+    font: "Feijoa Bold-Cambridge",
+    fill: cam-dark-blue,
+    hyphenate: false,
+  )
 
 
   show heading.where(level: 1): it => {
@@ -34,6 +38,7 @@
     }
     let supp-text = it.supplement.text
     let supp-text = upper(supp-text.at(0)) + supp-text.slice(1)
+    set par(justify: false)
     v(6em)
     block(spacing: 4em, {
       text(
@@ -65,13 +70,26 @@
     let chapter = counter(heading).at(here()).at(0)
     numbering("1.1", chapter, n)
   })
-  show math.equation: set text(fill: cam-dark-blue, font: "Fira Math")
+  show math.equation: set text(
+    fill: cam-dark-blue,
+    font: "New Computer Modern Math",
+    fallback: false,
+  )
   set figure(
     numbering: (..n) => {
       let chapter = counter(heading).at(here()).at(0)
       numbering("1.1", chapter, ..n)
     },
   )
+  // TODO: we also want to add line to top and bottom of the table
+  show table.cell.where(y: 0): set text(weight: "bold")
+  set table(
+    stroke: (x, y) => if y == 0 {
+      (bottom: 0.7pt + cam-dark-blue)
+    },
+  )
+  show figure.caption: set align(left)
+
 
   set page(
     paper: "a4",
