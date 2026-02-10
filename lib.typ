@@ -7,15 +7,29 @@
 #let cam-slate-3 = rgb(84, 96, 114)
 #let cam-slate-4 = rgb(35, 40, 48)
 
+
+
 #let _author-state = state("author", "")
 #let _date-state = state("date", "")
+#let _mode_state = state("mode", "light")
 
-#let cam-theisis-text(body) = {
-  set text(font: "Open Sans", size: 1em, fill: cam-slate-4)
+#let _emphasis-text-colour(mode: "light") = if (mode == "light") {
+  cam-dark-blue
+} else {
+  cam-blue
+}
+#let _main-text-colour(mode: "light") = if (mode == "light") {
+  cam-slate-4
+} else {
+  white
+}
+
+#let cam-theisis-text(mode: "light", body) = {
+  set text(font: "Open Sans", size: 1em, fill: _main-text-colour(mode: mode))
   set par(justify: true)
   show heading: set text(
     font: "Feijoa Bold-Cambridge",
-    fill: cam-dark-blue,
+    fill: _emphasis-text-colour(mode: mode),
     hyphenate: false,
   )
 
@@ -30,7 +44,7 @@
       align(center, text(
         font: "Feijoa Bold-Cambridge",
         size: 2em,
-        fill: cam-dark-blue,
+        fill: _emphasis-text-colour(mode: mode),
         it,
       ))
       v(1em)
@@ -44,7 +58,7 @@
       text(
         font: "Feijoa Medium-Cambridge",
         size: 1.5em,
-        fill: cam-slate-4,
+        fill: _main-text-colour(mode: mode),
         supp-text + [ ] + counter(heading).display(it.numbering),
       )
       linebreak()
@@ -52,7 +66,7 @@
       text(
         font: "Feijoa Bold-Cambridge",
         size: 2em,
-        fill: cam-dark-blue,
+        fill: _emphasis-text-colour(mode: mode),
         it.body,
       )
     })
@@ -71,7 +85,11 @@
     numbering("1.1", chapter, n)
   })
   show math.equation: set text(
-    fill: cam-dark-blue,
+    font: "New Computer Modern Math",
+    fallback: false,
+  )
+  show math.equation.where(block: true): set text(
+    fill: _emphasis-text-colour(mode: mode),
     font: "New Computer Modern Math",
     fallback: false,
   )
@@ -81,18 +99,43 @@
       numbering("1.1", chapter, ..n)
     },
   )
+  set figure(placement: auto)
+  show figure.caption: set block(inset: 1em)
+
+
+  let fig-depth = counter("figure-depth")
+
+  show figure: it => {
+    fig-depth.step() // Move deeper
+
+    context {
+      let depth = fig-depth.get().at(0)
+
+      if depth == 1 {
+        it
+        // block(inset: 1em, it)
+      } else {
+        // Sub-figure: No extra padding
+        // pad(bottom: 0.5em, it)
+        it
+      }
+    }
+
+    fig-depth.update(n => n - 1) // Move back up after processing
+  }
   // TODO: we also want to add line to top and bottom of the table
   show table.cell.where(y: 0): set text(weight: "bold")
   set table(
     stroke: (x, y) => if y == 0 {
-      (bottom: 0.7pt + cam-dark-blue)
+      (bottom: 0.7pt + _emphasis-text-colour(mode: mode))
     },
   )
-  show figure.caption: set align(left)
+  set table.hline(stroke: _emphasis-text-colour(mode: mode))
 
 
   set page(
     paper: "a4",
+    fill: if (mode == "light") { auto } else { cam-slate-4 },
     margin: (left: 3cm, right: 3cm, top: 3cm + 2em, bottom: 3cm),
     numbering: none,
     header-ascent: 2em,
@@ -115,7 +158,7 @@
         align(left)[
           #text(
             weight: "bold",
-            fill: cam-dark-blue,
+            fill: _emphasis-text-colour(mode: mode),
             font: "Open Sans",
             counter(page).display(),
           )
@@ -124,20 +167,20 @@
           #set par(justify: false)
           #text(
             font: "Feijoa Bold-Cambridge",
-            fill: cam-dark-blue,
+            fill: _emphasis-text-colour(mode: mode),
             [#current_title],
           )
         ],
       )
       v(-8pt)
-      line(length: 100%, stroke: 1pt + cam-dark-blue)
+      line(length: 100%, stroke: 1pt + _emphasis-text-colour(mode: mode))
     },
   )
 
   show outline.entry.where(level: 1): it => {
     v(1.5em, weak: true)
     show: strong
-    set text(fill: cam-dark-blue)
+    set text(fill: _emphasis-text-colour(mode: mode))
     it
   }
 
@@ -156,17 +199,20 @@
   submission-text: "This dissertation is submitted for the degree of",
   degree-title: "Doctor of Philosophy",
   date: datetime.today().display("[month repr:long] [year]"),
+  mode: "light",
 ) = {
   _author-state.update(author)
   _date-state.update(date)
+  _mode_state.update(mode)
 
   // Set page properties for the title page
   set page(
     paper: "a4",
     margin: (left: 3cm, right: 3cm, top: 3cm, bottom: 3cm),
     numbering: none,
+    fill: if (mode == "light") { auto } else { cam-slate-4 },
   )
-  set text(fill: cam-slate-4)
+  set text(fill: _main-text-colour(mode: mode))
 
   set align(center)
 
@@ -181,7 +227,7 @@
     text(
       font: "Feijoa Bold-Cambridge",
       weight: "bold",
-      fill: cam-dark-blue,
+      fill: _emphasis-text-colour(mode: mode),
       size: 2.5em,
       title,
     )
@@ -207,21 +253,42 @@
 
   v(3fr)
 
-  text(font: "Feijoa Bold-Cambridge", size: 1.5em, fill: cam-dark-blue, author)
+  text(
+    font: "Feijoa Bold-Cambridge",
+    size: 1.5em,
+    fill: _emphasis-text-colour(mode: mode),
+    author,
+  )
   v(1em)
 
   // 6. Department and University
-  text(font: "Open Sans", size: 1.2em, department)
+  text(
+    font: "Open Sans",
+    size: 1.2em,
+    department,
+  )
   parbreak()
-  text(font: "Open Sans", size: 1.2em, university)
+  text(
+    font: "Open Sans",
+    size: 1.2em,
+    university,
+  )
 
   v(2fr)
 
   // 7. Submission Text
   block(width: 80%, {
-    text(font: "Open Sans", submission-text)
+    text(
+      font: "Open Sans",
+      submission-text,
+    )
     parbreak()
-    text(font: "Open Sans", weight: "bold", fill: cam-dark-blue, degree-title)
+    text(
+      font: "Open Sans",
+      weight: "bold",
+      fill: _emphasis-text-colour(mode: mode),
+      degree-title,
+    )
   })
 
   v(1fr)
@@ -246,6 +313,7 @@
   submission-text: "This dissertation is submitted for the degree of",
   degree-title: "Doctor of Philosophy",
   date: datetime.today().display("[month repr:long] [year]"),
+  mode: "light",
   body,
 ) = {
   _author-state.update(author)
@@ -263,8 +331,9 @@
     submission-text: submission-text,
     subtitle: subtitle,
     title: title,
+    mode: mode,
   )
-  show: cam-theisis-text
+  show: cam-theisis-text.with(mode: mode)
   body
 }
 
@@ -301,14 +370,14 @@
     University or similar institution except as declared in the preface and
     specified in the text. It does not exceed the prescribed word limit for the
     relevant Degree Committee.
-    #align(right, [
+    #align(right, context [
       #text(
         font: "Feijoa Bold-Cambridge",
-        fill: cam-dark-blue,
+        fill: _emphasis-text-colour(mode: _mode_state.get()),
         context _author-state.get(),
       )
       \
-      #context _date-state.get()
+      #_date-state.get()
     ])
   ]
 }
