@@ -24,7 +24,7 @@
   white
 }
 
-#let cam-theisis-text(mode: "light", body) = {
+#let cam-thesis-text(mode: "light", body) = {
   set text(font: "Open Sans", size: 1em, fill: _main-text-colour(mode: mode))
   set par(justify: true)
   show heading: set text(
@@ -304,7 +304,7 @@
   pagebreak(weak: true)
 }
 
-#let cam-theisis(
+#let cam-thesis(
   title: "",
   subtitle: none,
   author: "",
@@ -336,7 +336,7 @@
     title: title,
     mode: mode,
   )
-  show: cam-theisis-text.with(mode: mode)
+  show: cam-thesis-text.with(mode: mode)
   body
 }
 

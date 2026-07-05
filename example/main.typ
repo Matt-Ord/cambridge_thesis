@@ -1,9 +1,9 @@
 #import "@preview/unofficial-cambridge-thesis:0.0.1": (
-  appendix, cam-dark-blue, cam-slate-4, cam-theisis, declaration, main-body,
+  appendix, cam-dark-blue, cam-slate-4, cam-thesis, declaration, main-body,
   preamble,
 )
 
-#show: cam-theisis.with(
+#show: cam-thesis.with(
   title: "University Of Cambridge Thesis Template",
   subtitle: "A Simple Template For Cambridge Theses",
   author: "Matthew Ord",
