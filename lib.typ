@@ -6,7 +6,7 @@
 #let cam-slate-2 = rgb(181, 189, 200)
 #let cam-slate-3 = rgb(84, 96, 114)
 #let cam-slate-4 = rgb(35, 40, 48)
-
+#let cam-dark-cherry = rgb(145, 20, 73)
 
 
 #let _author-state = state("author", "")
@@ -32,7 +32,6 @@
     fill: _emphasis-text-colour(mode: mode),
     hyphenate: false,
   )
-
 
   show heading.where(level: 1): it => {
     pagebreak(weak: true)
@@ -105,7 +104,6 @@
   set figure(placement: auto)
   show figure.caption: set block(inset: 1em)
 
-
   let fig-depth = counter("figure-depth")
 
   show figure: it => {
@@ -134,7 +132,6 @@
     },
   )
   set table.hline(stroke: _emphasis-text-colour(mode: mode))
-
 
   set page(
     paper: "a4",
