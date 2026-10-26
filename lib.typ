@@ -348,14 +348,14 @@
 
 #let main-body(body) = {
   set heading(numbering: "1.1.1", supplement: it => if it.depth == 1 {
-    "chapter"
-  } else { "section" })
+    "Chapter"
+  } else { "Section" })
   counter(heading).update(0)
   body
 }
 
 #let appendix(body) = {
-  set heading(numbering: "A.1.1", supplement: "appendix")
+  set heading(numbering: "A.1.1", supplement: "Appendix")
   counter(heading).update(0)
   body
 }
